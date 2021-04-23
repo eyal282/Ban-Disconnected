@@ -2,7 +2,7 @@
 {
 	"Version"
 	{
-		"Latest"	"1.1"
+		"Latest"	"1.2"
 	}
 	
 	"Notes"	"Moved github repo, added integration with my SQLiteBans plugin."
