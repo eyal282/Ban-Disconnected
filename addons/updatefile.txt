@@ -1,0 +1,16 @@
+"Information"
+{
+	"Version"
+	{
+		"Latest"	"1.0"
+	}
+	
+	"Notes"	"Plugin release."
+}
+	
+"Files"
+{
+	"Plugin"	"Path_SM/plugins/ban_disconnected.smx"
+	
+	"Source"	"Path_SM/scripting/ban_disconnected.sp"
+}
