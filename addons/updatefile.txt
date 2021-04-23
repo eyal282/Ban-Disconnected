@@ -2,10 +2,10 @@
 {
 	"Version"
 	{
-		"Latest"	"1.0"
+		"Latest"	"1.1"
 	}
 	
-	"Notes"	"Plugin release."
+	"Notes"	"Moved github repo, added integration with my SQLiteBans plugin."
 }
 	
 "Files"
