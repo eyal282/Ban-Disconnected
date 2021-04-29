@@ -17,16 +17,7 @@
 
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.3"
-
-enum enPenaltyType
-{
-	Penalty_Ban = 0,
-	Penalty_Gag,
-	Penalty_Mute,
-	Penalty_Silence,
-	enPenaltyType_LENGTH
-}
+#define PLUGIN_VERSION "1.4"
 
 public Plugin myinfo =
 {
