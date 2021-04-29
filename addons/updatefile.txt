@@ -2,7 +2,7 @@
 {
 	"Version"
 	{
-		"Latest"	"1.3"
+		"Latest"	"1.4"
 	}
 	
 	"Notes"	"Added Silence Disconnected for my SQLite Bans. Requires SQLiteBans V3.0 or higher to silence disconnect a player ( !admin )"
