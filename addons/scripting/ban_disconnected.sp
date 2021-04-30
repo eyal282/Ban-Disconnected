@@ -17,7 +17,7 @@
 
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.4"
+#define PLUGIN_VERSION "1.5"
 
 public Plugin myinfo =
 {
@@ -152,7 +152,7 @@ public void OnClientDisconnect(int client)
 {
 	char AuthId[35], IPAddress[32], Name[64];
 	
-	GetClientAuthId(client, AuthId_Engine, AuthId, sizeof(AuthId));
+	GetClientAuthId(client, AuthId_Steam2, AuthId, sizeof(AuthId));
 	
 	GetClientIP(client, IPAddress, sizeof(IPAddress), true);
 	GetClientName(client, Name, sizeof(Name));
