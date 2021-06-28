@@ -182,23 +182,12 @@ public void OnClientDisconnect(int client)
 
 public Action CommDisconnected(int client, int args)
 {
-
+	DisplayCommTargetMenu(client);
+	
+	return Plugin_Handled;
 }
 public Action BanDisconnected(int client, int args) {
-	if(args < 3)
-	{
-		ReplyToCommand(client, "[SM] Usage: sm_bandisconnected <steamid> <minutes|0> <reason>");
-		
-		return Plugin_Handled;
-	}
-	
-	char AuthId[35], Duration[11], Reason[256];
-	
-	GetCmdArg(1, AuthId, sizeof(AuthId));
-	GetCmdArg(2, Duration, sizeof(Duration));
-	GetCmdArg(3, Reason, sizeof(Reason));
-	
-	CheckAndPerformBan(client, AuthId, StringToInt(Duration), Reason);
+	DisplayBanTargetMenu(client);
 
 	return Plugin_Handled;
 }
