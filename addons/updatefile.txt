@@ -2,10 +2,10 @@
 {
 	"Version"
 	{
-		"Latest"	"1.5"
+		"Latest"	"1.7"
 	}
 	
-	"Notes"	"Bug fix against SQLite Bans"
+	"Notes"	"If a Steam ID is banned without a disconnect, check for someone online."
 }
 	
 "Files"
