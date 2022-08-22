@@ -17,7 +17,7 @@
 
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.5"
+#define PLUGIN_VERSION "1.6"
 
 public Plugin myinfo =
 {
@@ -85,11 +85,11 @@ public void OnPluginStart()
 
 
 #if defined _updater_included
-public int Updater_OnPluginUpdated()
+public void Updater_OnPluginUpdated()
 {
 	ServerCommand("sm_reload_translations");
 	
-	ReloadPlugin(INVALID_HANDLE);
+	Updater_ReloadPlugin(INVALID_HANDLE);
 }
 #endif
 
@@ -116,7 +116,7 @@ public void OnAllPluginsLoaded()
 		
 }
 
-void ReadBanReasons()
+stock void ReadBanReasons()
 {
 	char Path[PLATFORM_MAX_PATH];
 	
@@ -182,8 +182,9 @@ public void OnClientDisconnect(int client)
 
 public Action CommDisconnected(int client, int args)
 {
-
+	return Plugin_Handled;
 }
+
 public Action BanDisconnected(int client, int args) {
 	if(args < 3)
 	{
@@ -302,7 +303,6 @@ void CheckAndPerformBan(int client, const char[] steamid, int minutes, const cha
 	else ReplyToCommand(client, "[sm_bandisconnected] You can't ban an admin with higher immunity than yourself");
 }
 
-
 void CheckAndPerformSilence(int client, const char[] steamid, int minutes, const char[] reason)
 {
 	AdminId source_aid = GetUserAdmin(client), target_aid;
@@ -367,7 +367,6 @@ public void OnAdminMenuReady(Handle topmenu) {
 	}
 }
 
-
 public void AdminMenu_Ban(Handle topmenu,
 	TopMenuAction action, TopMenuObject object_id, int param, char[] buffer, int maxlength)
 {
@@ -379,8 +378,6 @@ public void AdminMenu_Ban(Handle topmenu,
 		DisplayBanTargetMenu(param);
 	}
 }
-
-
 
 void DisplayBanTargetMenu(int client)
 {
@@ -413,8 +410,6 @@ void DisplayBanTargetMenu(int client)
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
 
-
-
 public int MenuHandler_BanPlayerList(Handle menu, MenuAction action, int param1, int param2)
 {
 	if(action == MenuAction_End)
@@ -431,20 +426,16 @@ public int MenuHandler_BanPlayerList(Handle menu, MenuAction action, int param1,
 		GetMenuItem(menu, param2, state_, sizeof(state_));
 		DisplayBanTimeMenu(param1, state_);
 	}
+	return 0;
 }
 
-
-
-void AddMenuItemWithState(Handle menu, const char[] state_, const char[] addstate, const char[] display) {
+stock void AddMenuItemWithState(Handle menu, const char[] state_, const char[] addstate, const char[] display) {
 	char newstate[128];
 	Format(newstate, sizeof(newstate), "%s\n%s", state_, addstate);
 	AddMenuItem(menu, newstate, display);
 }
 
-
-
-
-void DisplayBanTimeMenu(int client, const char[] state_) {
+stock void DisplayBanTimeMenu(int client, const char[] state_) {
 	Handle menu = CreateMenu(MenuHandler_BanTimeList);
 	SetMenuTitle(menu, "Ban disconnected player");
 	SetMenuExitBackButton(menu, true);
@@ -467,8 +458,6 @@ void DisplayBanTimeMenu(int client, const char[] state_) {
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
 
-
-
 public int MenuHandler_BanTimeList(Handle menu, MenuAction action, int param1, int param2) {
 	if(action == MenuAction_End)
 		CloseHandle(menu);
@@ -481,9 +470,8 @@ public int MenuHandler_BanTimeList(Handle menu, MenuAction action, int param1, i
 		GetMenuItem(menu, param2, state_, sizeof(state_));
 		DisplayBanReasonMenu(param1, state_);
 	}
+	return 0;
 }
-
-
 
 void DisplayBanReasonMenu(int client, const char[] state_)
 {
@@ -504,8 +492,6 @@ void DisplayBanReasonMenu(int client, const char[] state_)
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
 
-
-
 public int MenuHandler_BanReasonList(Handle menu, MenuAction action, int param1, int param2) {
 	if(action == MenuAction_End)
 		CloseHandle(menu);
@@ -520,9 +506,8 @@ public int MenuHandler_BanReasonList(Handle menu, MenuAction action, int param1,
 			SetFailState("Bug in menu handlers");
 		else CheckAndPerformBan(param1, state_parts[0], StringToInt(state_parts[1]), state_parts[2]);
 	}
+	return 0;
 }
-
-
 
 public void AdminMenu_Comm(Handle topmenu,
 	TopMenuAction action, TopMenuObject object_id, int param, char[] buffer, int maxlength)
@@ -535,8 +520,6 @@ public void AdminMenu_Comm(Handle topmenu,
 		DisplayCommTargetMenu(param);
 	}
 }
-
-
 
 void DisplayCommTargetMenu(int client)
 {
@@ -569,8 +552,6 @@ void DisplayCommTargetMenu(int client)
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
 
-
-
 public int MenuHandler_SilencePlayerList(Handle menu, MenuAction action, int param1, int param2)
 {
 	if(action == MenuAction_End)
@@ -587,6 +568,7 @@ public int MenuHandler_SilencePlayerList(Handle menu, MenuAction action, int par
 		GetMenuItem(menu, param2, state_, sizeof(state_));
 		DisplaySilenceTimeMenu(param1, state_);
 	}
+	return 0;
 }
 
 void DisplaySilenceTimeMenu(int client, const char[] state_) {
@@ -613,8 +595,6 @@ void DisplaySilenceTimeMenu(int client, const char[] state_) {
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
 
-
-
 public int MenuHandler_SilenceTimeList(Handle menu, MenuAction action, int param1, int param2) {
 	if(action == MenuAction_End)
 		CloseHandle(menu);
@@ -627,9 +607,8 @@ public int MenuHandler_SilenceTimeList(Handle menu, MenuAction action, int param
 		GetMenuItem(menu, param2, state_, sizeof(state_));
 		DisplaySilenceReasonMenu(param1, state_);
 	}
+	return 0;
 }
-
-
 
 void DisplaySilenceReasonMenu(int client, const char[] state_)
 {
@@ -650,8 +629,6 @@ void DisplaySilenceReasonMenu(int client, const char[] state_)
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
 }
 
-
-
 public int MenuHandler_SilenceReasonList(Handle menu, MenuAction action, int param1, int param2) {
 	if(action == MenuAction_End)
 		CloseHandle(menu);
@@ -666,4 +643,5 @@ public int MenuHandler_SilenceReasonList(Handle menu, MenuAction action, int par
 			SetFailState("Bug in menu handlers");
 		else CheckAndPerformSilence(param1, state_parts[0], StringToInt(state_parts[1]), state_parts[2]);
 	}
+	return 0;
 }
